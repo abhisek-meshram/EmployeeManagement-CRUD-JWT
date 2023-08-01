@@ -1,3 +1,11 @@
+** AUTH TOKEN API**
+In Memory Authentication
+curl --location 'http://localhost:8080/auth/login' \
+--header 'Content-Type: application/json' \
+--data '{
+"username" : "ABHI",
+"password": "ABHI"
+}'
 **GET API -** 
 
 curl --location 'http://localhost:8080/api/v1/employees' \
