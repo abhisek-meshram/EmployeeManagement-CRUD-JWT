@@ -2,12 +2,8 @@ package com.demo.employeemanagement.payloads;
 
 import lombok.*;
 
-@Getter
-@Setter
-@AllArgsConstructor
-@NoArgsConstructor
+@Data
 @Builder
-@ToString
 public class JwtResponse {
     private String jwtToken;
     private String username;

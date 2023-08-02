@@ -1,19 +1,28 @@
 package com.demo.employeemanagement.entities;
 
-import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import com.demo.employeemanagement.payloads.EmployeeDTO;
+import jakarta.persistence.Id;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Table;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Column;
+import jakarta.persistence.OneToOne;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.CascadeType;
 
+
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 @Table(name = "employee")
-@Getter
-@Setter
+@Data
 @NoArgsConstructor
-@AllArgsConstructor
 public class Employee {
 
     @Id
@@ -38,6 +47,17 @@ public class Employee {
     private EmployeeDetails employeeDetails;
 
     @OneToMany(mappedBy = "employee",cascade = CascadeType.ALL)
-    private List<Address> addresses;
+    private List<Address> addresses = new ArrayList<>();
+
+    public Employee(EmployeeDTO employeeDTO) {
+        this.firstName = employeeDTO.getFirstName();
+        this.middleName = employeeDTO.getMiddleName();
+        this.lastName = employeeDTO.getLastName();
+        this.employeeDetails = new EmployeeDetails(employeeDTO.getSalary(),
+                employeeDTO.getAge(),employeeDTO.getGender(),employeeDTO.getJoiningDate());
+        employeeDTO.getAddresses().forEach( addressDTO ->
+            this.addresses.add(new Address(addressDTO,this)));
+    }
+
 
 }

@@ -18,9 +18,9 @@ public class EmployeeController {
     EmployeeService employeeService;
 
     @PostMapping
-    public ResponseEntity<EmployeeDTO> addEmployee(@RequestBody EmployeeDTO employeeDTO) {
-        employeeDTO = this.employeeService.saveEmployee(employeeDTO);
-        return new ResponseEntity<>(employeeDTO, HttpStatus.CREATED);
+    public ResponseEntity<ApiResponse> addEmployee(@RequestBody EmployeeDTO employeeDTO) {
+        this.employeeService.saveEmployee(employeeDTO);
+        return new ResponseEntity<>(new ApiResponse("Employee Created Successfully",Boolean.TRUE), HttpStatus.CREATED);
     }
     @GetMapping
     public ResponseEntity<List<EmployeeDTO>> getAllEmployee() {
@@ -33,9 +33,9 @@ public class EmployeeController {
         return new ResponseEntity<>(employeeDTO,HttpStatus.OK);
     }
     @PutMapping("/{empId}")
-    public ResponseEntity<EmployeeDTO> updateEmployee(@RequestBody EmployeeDTO employeeDTO, @PathVariable Long empId) {
-        employeeDTO = this.employeeService.updateEmployee(employeeDTO,empId);
-        return new ResponseEntity<>(employeeDTO,HttpStatus.OK);
+    public ResponseEntity<ApiResponse> updateEmployee(@RequestBody EmployeeDTO employeeDTO, @PathVariable Long empId) {
+        this.employeeService.updateEmployee(employeeDTO,empId);
+        return new ResponseEntity<>(new ApiResponse("Employee Updated Successfully",Boolean.TRUE),HttpStatus.OK);
     }
 
     @PostMapping("/{empId}")

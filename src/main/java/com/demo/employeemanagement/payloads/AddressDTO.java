@@ -1,18 +1,14 @@
 package com.demo.employeemanagement.payloads;
 
+import com.demo.employeemanagement.entities.Address;
 import com.demo.employeemanagement.utilities.AddressType;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
+import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
-@Getter
-@Setter
-@AllArgsConstructor
+@Data
 @NoArgsConstructor
 public class AddressDTO {
 
-    private Long id;
     private AddressType addressType;
     private String city;
     private String country;
@@ -20,4 +16,12 @@ public class AddressDTO {
     private String state;
     private String street;
 
+    public AddressDTO(Address address) {
+        this.addressType = address.getAddressType();
+        this.city = address.getCity();
+        this.country = address.getCountry();
+        this.postalCode = address.getPostalCode();
+        this.state = address.getState();
+        this.street = address.getStreet();
+    }
 }

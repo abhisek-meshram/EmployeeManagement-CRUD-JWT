@@ -3,8 +3,6 @@ package com.demo.employeemanagement.controllers;
 import com.demo.employeemanagement.payloads.JwtRequest;
 import com.demo.employeemanagement.payloads.JwtResponse;
 import com.demo.employeemanagement.security.JwtHelper;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -29,16 +27,13 @@ public class AuthController {
     @Autowired
     private JwtHelper helper;
 
-    private Logger logger = LoggerFactory.getLogger(AuthController.class);
-
-
     @PostMapping("/login")
     public ResponseEntity<JwtResponse> login(@RequestBody JwtRequest request) {
 
         this.doAuthenticate(request.getUsername(), request.getPassword());
 
-
         UserDetails userDetails = userDetailsService.loadUserByUsername(request.getUsername());
+
         String token = this.helper.generateToken(userDetails);
 
         JwtResponse response = JwtResponse.builder()
@@ -52,8 +47,6 @@ public class AuthController {
         UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(email, password);
         try {
             manager.authenticate(authentication);
-
-
         } catch (BadCredentialsException e) {
             throw new BadCredentialsException(" Invalid Username or Password  !!");
         }

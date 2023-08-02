@@ -1,14 +1,23 @@
 package com.demo.employeemanagement.entities;
 
+import com.demo.employeemanagement.payloads.AddressDTO;
 import com.demo.employeemanagement.utilities.AddressType;
-import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import jakarta.persistence.Id;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Table;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Column;
+import jakarta.persistence.ManyToOne;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 @Entity
 @Table(name = "address")
-@Getter
-@Setter
+@Data
+@NoArgsConstructor
+
 public class Address {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -16,6 +25,7 @@ public class Address {
     private Long id;
 
     @ManyToOne
+    @ToString.Exclude
     private Employee employee;
 
     @Column(name = "type")
@@ -35,4 +45,14 @@ public class Address {
 
     @Column(name = "street")
     private String street;
+
+    public Address(AddressDTO addressDTO,Employee employee) {
+        this.employee = employee;
+        this.addressType = addressDTO.getAddressType();
+        this.city = addressDTO.getCity();
+        this.country = addressDTO.getCountry();
+        this.postalCode = addressDTO.getPostalCode();
+        this.state = addressDTO.getState();
+        this.street = addressDTO.getStreet();
+    }
 }

@@ -1,7 +1,7 @@
 package com.demo.employeemanagement.utilities;
 
 public enum AddressType {
-    PERMANENT(1), OFFICE(2), RESIDENTIAL(3);
+    COMMUNICATION(0), PERMANENT(1);
 
     private int value;
     private AddressType(int value){

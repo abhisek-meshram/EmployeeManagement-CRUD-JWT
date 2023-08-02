@@ -2,12 +2,7 @@ package com.demo.employeemanagement.payloads;
 
 import lombok.*;
 
-@Getter
-@Setter
-@AllArgsConstructor
-@NoArgsConstructor
-@Builder
-@ToString
+@Data
 public class JwtRequest {
     private String username;
     private String password;
