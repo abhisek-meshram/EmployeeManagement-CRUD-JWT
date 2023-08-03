@@ -5,6 +5,7 @@ import com.demo.employeemanagement.exceptions.ResourceNotFoundException;
 import com.demo.employeemanagement.payloads.EmployeeDTO;
 import com.demo.employeemanagement.repositories.EmployeeRepository;
 import com.demo.employeemanagement.services.EmployeeService;
+import com.demo.employeemanagement.utilities.EmployeeConstants;
 import com.demo.employeemanagement.utilities.EmployeeHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,20 +21,8 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     public void saveEmployee(EmployeeDTO employeeDTO) {
         Employee employee = new Employee(employeeDTO);
-        generateEmail(employee);
+        EmployeeHelper.getEmployeeHelperInstance().generateEmail(employee);
         this.employeeRepository.save(employee);
-    }
-
-    private void generateEmail(Employee employee) {
-        StringBuilder emailBuilder = new StringBuilder();
-        String empFName = employee.getFirstName().toLowerCase();
-        String empLName = employee.getLastName().toLowerCase();
-        emailBuilder.append(empFName)
-                .append(".")
-                .append(empLName)
-                .append("@myorgmail.in");
-        employee.setEmail(emailBuilder.toString());
-        //TODO: handle duplicate email
     }
 
     @Override
@@ -49,7 +38,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     public EmployeeDTO getEmployeeById(Long empId) {
         Employee employee = this.employeeRepository.findById(empId)
-                .orElseThrow(() -> new ResourceNotFoundException("employee","empId",empId));
+                .orElseThrow(() -> new ResourceNotFoundException(EmployeeConstants.EMPLOYEE,EmployeeConstants.EMPLOYEE_ID,empId));
         return new EmployeeDTO(employee);
     }
 

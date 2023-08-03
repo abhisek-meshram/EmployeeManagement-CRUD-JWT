@@ -66,4 +66,16 @@ public class EmployeeHelper {
             employeeDetails.setJoiningDate(employeeDTO.getJoiningDate());
     }
 
+    public void generateEmail(Employee employee) {
+        StringBuilder emailBuilder = new StringBuilder();
+        String empFName = employee.getFirstName().toLowerCase();
+        String empLName = employee.getLastName().toLowerCase();
+        emailBuilder.append(empFName)
+                .append(".")
+                .append(empLName)
+                .append("@myorgmail.in");
+        employee.setEmail(emailBuilder.toString());
+        //TODO: handle duplicate email
+    }
+
 }
